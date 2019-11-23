@@ -11,6 +11,10 @@
 [circleci]: https://circleci.com/gh/vxcontrol/rancher-letsencrypt
 [hub]: https://hub.docker.com/r/vxcontrol/rancher-letsencrypt/
 
+**This repository is a maintained fork from unmaintained work done by [janeczku](https://github.com/janeczku)**
+
+https://github.com/janeczku/rancher-letsencrypt
+
 A [Rancher](http://rancher.com/rancher/) service that obtains free SSL/TLS certificates from the [Let's Encrypt CA](https://letsencrypt.org/), adds them to Rancher's certificate store and manages renewal and propagation of updated certificates to load balancers.
 
 #### Requirements
@@ -161,9 +165,17 @@ Then make sure that HTTP requests to `domain.com/.well-known/acme-challenge` are
 
 ![Rancher Load Balancer Let's Encrypt Targets](https://cloud.githubusercontent.com/assets/198988/22224463/0d1eb4aa-e1bf-11e6-955c-5f0d085ce8cd.png)
 
-### Building the image
+### How to build the development image
 
-`make build && make image`
+1. Compile the tool with go v1.12.
+```
+make docker-build
+```
+2. Set your own repository by setting `DOCKER_REPOSITORY` in Makefile.
+3. Build the image.
+```
+make image
+```
 
 ### Contributions
 
