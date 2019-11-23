@@ -7,7 +7,8 @@
 PROJECT := rancher-letsencrypt
 PLATFORMS := linux
 ARCH := amd64
-DOCKER_IMAGE := pile.mdk.zone/mdkbackend/letencrypt
+DOCKER_REPOSITORY := pile.mdk.zone/mdkbackend/letencrypt
+DOCKER_IMAGE := $(DOCKER_REPOSITORY)/$(PROJECT)
 
 VERSION := $(shell cat VERSION)
 SHA := $(shell git rev-parse --short HEAD)
@@ -27,6 +28,9 @@ help:
 
 build: build-dir
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-X main.Version=$(VERSION) -X main.Git=$(SHA)" -o build/$(PROJECT)-linux-amd64
+
+docker-build:
+	docker run --rm -it -v "$(PWD)":/opt/src/rancher-letsencrypt golang:1.12 bash /opt/src/rancher-letsencrypt/scripts/build.sh
 
 deps:
 	go get github.com/c4milo/github-release
